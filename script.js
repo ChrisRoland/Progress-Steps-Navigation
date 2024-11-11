@@ -1,54 +1,105 @@
-// function moveNext() {
-//     $(".circle").eq(currentIndex).addClass("active")
-//     $(".progress").css("width", "35%")
-//     $(".btn").removeAttr("disabled");
+//jQuery
+// const progress = $("#progress")
+// const prev = $("#prev")
+// const next = $("#next")
+// const circles = $(".circle")
+
+// let currentActive = 1
+
+// next.on("click", () => {
+//     currentActive++
+
+//     if (currentActive > circles.length) {
+//         currentActive = circles.length;
+//     }
+
+//     update()
+// })
+
+// prev.on("click", () => {
+//     currentActive--
+
+//     if (currentActive < 1) {
+//         currentActive = 1;
+//     }
+//     console.log(currentActive)
+
+//     update()
+// })
+
+// function update() {
+//     //NTS: idx is the same as index
+//     circles.each((idx, circle) => {
+//         if (idx < currentActive) {
+//             $(circle).addClass("active");
+//         } else {
+//             $(circle).removeClass("active");
+//         }
+//     });
+
+//     // Update progress bar width
+//     const progressWidth = ((currentActive - 1) / (circles.length - 1)) * 100;
+//     progress.css("width", progressWidth + "%");
+
+//     // Enable/disable buttons
+//     prev.prop("disabled", currentActive === 1);
+//     next.prop("disabled", currentActive === circles.length);
 // }
 
-// function movePrev() {
-//     $(".circle").removeClass("active");
-//     $(".progress").css("width", "-35%")
-//     $(".btn").attr("disabled");
-// }
+//Vanilla
+const progress = document.getElementById("progress");
+const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+const circles = document.querySelectorAll(".circle");
 
-const progress = $("#progress")
-const prev = $("#prev")
-const next = $("#next")
-const circles = $(".circle")
+let currentActive = 1;
 
-let currentActive = 1
-
-next.on("click", () => {
-    currentActive++
+next.addEventListener("click", () => {
+    currentActive++;
 
     if (currentActive > circles.length) {
         currentActive = circles.length;
     }
 
-    update()
-})
+    update();
+});
 
-prev.on("click", () => {
-    currentActive--
+prev.addEventListener("click", () => {
+    currentActive--;
 
     if (currentActive < 1) {
         currentActive = 1;
     }
-    console.log(currentActive)
 
-    update()
-})
+    update();
+});
 
 function update() {
-    circles.each((idx, circles) => {
+    // Update active classes for circles
+    circles.forEach((circle, idx) => {
         if (idx < currentActive) {
-            $(circles).addClass("active");
-            $(".progress").css("width", "33%");
-
+            circle.classList.add("active");
         } else {
-            $(circles).removeClass("active");
-            $(".progress").css("width", "0%");
+            circle.classList.remove("active");
         }
-
-
     });
+
+    // Update progress bar width
+    const progressWidth = ((currentActive - 1) / (circles.length - 1)) * 100 + "%";
+    progress.style.width = progressWidth;
+
+    // Enable/disable buttons
+    prev.disabled = currentActive === 1;
+    next.disabled = currentActive === circles.length;
+
+    //Or
+
+    if(currentActive == 1) {
+        prev. disabled = true
+        } else if (currentActive == circles.length) {
+        next. disabled = true
+        } else {
+        prev.disabled = false
+        next, disabled = false
+    }
 }
